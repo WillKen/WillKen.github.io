@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Objective-C Notes(1) · WillKen&#39;s Blog</title>
+    <title>Objective-C Notes · WillKen&#39;s Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -227,7 +227,7 @@
                 <a href="/" >WillKen&#39;s Blog.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Objective-C Notes(1)</a>
+                <a href="#" class="post-name">Objective-C Notes</a>
             </div>
     </div>
     
@@ -257,7 +257,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Objective-C Notes(1)
+            Objective-C Notes
             <!-- 404 -->
             
         </h1>
@@ -282,7 +282,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">226</span>Reading time: <span class="post-count reading-time">1 min</span></span>
+                        <span>Word count: <span class="post-count word-count">918</span>Reading time: <span class="post-count reading-time">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -411,7 +411,8 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="Objective-C-Notes-1"><a href="#Objective-C-Notes-1" class="headerlink" title="Objective-C Notes(1)"></a>Objective-C Notes(1)</h1><ul>
+        <h1 id="Objective-C-Notes"><a href="#Objective-C-Notes" class="headerlink" title="Objective C Notes"></a>Objective C Notes</h1><p>声明：本博客参考了<a href="https://www.yiibai.com/objective_c" target="_blank" rel="noopener">易百教程</a>和<a href="https://www.runoob.com/ios/ios-tutorial.html" target="_blank" rel="noopener">菜鸟教程</a></p>
+<ul>
 <li><p>类的声明：<code>@interface child : father</code></p>
 </li>
 <li><p>方法的实现： <code>@implementation child</code> (不用制定父类)</p>
@@ -437,6 +438,70 @@ height:50vh;
 </li>
 <li><p>id is a type, which means “pointer to an object of any class”. id本身就是指针，id*是指向指针的指针。</p>
 </li>
+<li><p>数据类型：NSString字符串</p>
+</li>
+<li><p>数据类型：CGfloat 浮点值的基本类型</p>
+</li>
+<li><p>数据类型：NSInteger 整型</p>
+<ul>
+<li><p>与int区别：在苹果api实现里，NSInteger是一个封装，它会识别当前操作系统的位数，自动返回最大的类型。</p>
+<blockquote>
+<p> <strong>typedef long NSInteger</strong></p>
+<p> When building 32-bit applications, NSInteger is a 32-bit integer. A 64-bit application treats NSInteger as a 64-bit integer.**</p>
+</blockquote>
+<p>32程序：NSInteger相当于int32_t，4个字节为int的别名。</p>
+<p>64位程序：NSInteger相当于int64_t,8个字节为long long的别名。</p>
+<p>在兼容32位和64位系统时，int和long long比NSInteger可靠地多。</p>
+<p>因此在不考虑兼容32的时候：一般直接使用NSInteger就好了。</p>
+<p>在考虑兼容的时候，使用int和long long就好了。</p>
+</li>
+</ul>
+</li>
+<li><p>数据类型：BOOL 布尔型</p>
+</li>
+<li><p>打印日志，<code>NSlog(@&quot;&quot;)</code> 打印在设备日志和调试版本的控制台和分别调试模式上。</p>
+</li>
+<li><p>NSMutableArray 和 NSArray 是 ObjectiveC 中使用的数组类，前者是可变数组，后者是不可变数组。</p>
+<ul>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NSMutableArray *aMutableArray = [[NSMutableArray alloc]init];</span><br><span class="line">[anArray addObject:@&quot;firstobject&quot;];</span><br><span class="line">NSArray *aImmutableArray = [[NSArray alloc]</span><br><span class="line">initWithObjects:@&quot;firstObject&quot;,nil];</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>NSMutableDictionary和NSDictionary是Objective中使用的字典，前者可变词典，后者不可变词典。</p>
+<ul>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NSMutableDictionary*aMutableDictionary = [[NSMutableArray alloc]init];</span><br><span class="line">[aMutableDictionary setObject:@&quot;firstobject&quot; forKey:@&quot;aKey&quot;];</span><br><span class="line">NSDictionary*aImmutableDictionary= [[NSDictionary alloc]initWithObjects:[NSArray arrayWithObjects:</span><br><span class="line">@&quot;firstObject&quot;,nil] forKeys:[ NSArray arrayWithObjects:@&quot;aKey&quot;]];</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>用extern可以创建外部文件可以访问的全局变量。使用<code>extern</code>关键字在任何地方声明变量。</p>
+</li>
+<li><p>运算符基本与C++相同</p>
+</li>
+<li><p>默认情况下，Objective-C编程语言使用按值调用方法来传递参数。 </p>
+</li>
+<li><p>要通过引用传递值，参数指针将像任何其他值一样传递给函数。 因此，需要将函数参数声明为指针类型。</p>
+</li>
+<li><p>块是C，Objective-C和C++等编程语言中的高级功能，允许创建不同的代码段，这些代码段可以传递给方法或函数，就像它们是值一样。</p>
+<ul>
+<li><p>下面是一个简单的示例代码 - </p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> (^multiplyTwoValues)(<span class="keyword">double</span>, <span class="keyword">double</span>) = </span><br><span class="line">   ^(<span class="keyword">double</span> firstValue, <span class="keyword">double</span> secondValue) &#123;</span><br><span class="line">      <span class="keyword">return</span> firstValue * secondValue;</span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> result = multiplyTwoValues(<span class="number">2</span>,<span class="number">4</span>); </span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"The result is %f"</span>, result);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这是一个在块中使用<code>typedef</code>的简单示例。 它是使用XCode运行的。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">void</span> (^CompletionBlock)();</span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SampleClass</span>:<span class="title">NSObject</span></span></span><br><span class="line">- (<span class="keyword">void</span>)performActionWithCompletion:(CompletionBlock)completionBlock;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">SampleClass</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)performActionWithCompletion:(CompletionBlock)completionBlock &#123;</span><br><span class="line"></span><br><span class="line">   <span class="built_in">NSLog</span>(<span class="string">@"Action Performed"</span>);</span><br><span class="line">   completionBlock();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main() &#123;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/* 第一个Objective-C程序 */</span></span><br><span class="line">   SampleClass *sampleClass = [[SampleClass alloc]init];</span><br><span class="line">   [sampleClass performActionWithCompletion:^&#123;</span><br><span class="line">      <span class="built_in">NSLog</span>(<span class="string">@"Completion is called to intimate action is performed."</span>);</span><br><span class="line">   &#125;];</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">Objective-C</span><br></pre></td></tr></table></figure>
+
+<p>执行上面示例代码，得到以下结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2018-11-10 08:14:57.105 demo[184:323] Action Performed</span><br><span class="line">2018-11-10 08:14:57.108 demo[184:323] Completion is called to intimate action is performed.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>自定义类的init函数</p>
+<ul>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-(id)init &#123;</span><br><span class="line"> self = [super init];</span><br><span class="line"> length = 1.0;</span><br><span class="line"> breadth = 1.0;</span><br><span class="line"> return self;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Objective-C提供了类别和扩展</p>
+</li>
 </ul>
 
     </article>
@@ -444,9 +509,9 @@ height:50vh;
     
         <div class="license-wrapper">
             <p>Author：<a href="http://WillKen.github.io">WillKen Zhang</a>
-            <p>原文链接：<a href="http://WillKen.github.io/2019/09/16/Objective-C-Notes-1/">http://WillKen.github.io/2019/09/16/Objective-C-Notes-1/</a>
-            <p>发表日期：<a href="http://WillKen.github.io/2019/09/16/Objective-C-Notes-1/">September 16th 2019, 4:02:39 pm</a>
-            <p>更新日期：<a href="http://WillKen.github.io/2019/09/16/Objective-C-Notes-1/">September 16th 2019, 4:08:09 pm</a>
+            <p>原文链接：<a href="http://WillKen.github.io/2019/09/16/Objective-C-Notes/">http://WillKen.github.io/2019/09/16/Objective-C-Notes/</a>
+            <p>发表日期：<a href="http://WillKen.github.io/2019/09/16/Objective-C-Notes/">September 16th 2019, 4:02:39 pm</a>
+            <p>更新日期：<a href="http://WillKen.github.io/2019/09/16/Objective-C-Notes/">September 18th 2019, 8:52:28 am</a>
             <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -578,7 +643,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Objective-C-Notes-1"><span class="toc-number">1.</span> <span class="toc-text">Objective-C Notes(1)</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Objective-C-Notes"><span class="toc-number">1.</span> <span class="toc-text">Objective C Notes</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -591,10 +656,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
     
     
     
@@ -676,7 +737,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/16</span><a class="archive-post-title" href= "/2019/09/16/Objective-C-Notes-1/" >Objective-C Notes(1)</a>
+            <span class="archive-post-date">09/16</span><a class="archive-post-title" href= "/2019/09/16/Objective-C-Notes/" >Objective-C Notes</a>
         </li>
     
     
@@ -723,13 +784,13 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="ios"><span class="iconfont-archer">&#xe606;</span>ios</span>
-    
         <span class="sidebar-tag-name" data-tags="Objective-C"><span class="iconfont-archer">&#xe606;</span>Objective-C</span>
     
-        <span class="sidebar-tag-name" data-tags="C/C++"><span class="iconfont-archer">&#xe606;</span>C/C++</span>
+        <span class="sidebar-tag-name" data-tags="ios"><span class="iconfont-archer">&#xe606;</span>ios</span>
     
         <span class="sidebar-tag-name" data-tags="Web"><span class="iconfont-archer">&#xe606;</span>Web</span>
+    
+        <span class="sidebar-tag-name" data-tags="C/C++"><span class="iconfont-archer">&#xe606;</span>C/C++</span>
     
         <span class="sidebar-tag-name" data-tags="Unity"><span class="iconfont-archer">&#xe606;</span>Unity</span>
     
@@ -772,9 +833,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="MOSAD"><span class="iconfont-archer">&#xe60a;</span>MOSAD</span>
     
-        <span class="sidebar-category-name" data-categories="软件工程专业导论Blog"><span class="iconfont-archer">&#xe60a;</span>软件工程专业导论Blog</span>
-    
         <span class="sidebar-category-name" data-categories="Web"><span class="iconfont-archer">&#xe60a;</span>Web</span>
+    
+        <span class="sidebar-category-name" data-categories="软件工程专业导论Blog"><span class="iconfont-archer">&#xe60a;</span>软件工程专业导论Blog</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
