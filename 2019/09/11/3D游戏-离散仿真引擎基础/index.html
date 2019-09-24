@@ -438,51 +438,54 @@ height:50vh;
 <li><strong>常用事件包括 OnGUI() OnDisable() OnEnable()</strong></li>
 </ul>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NewBehaviourScript</span> : <span class="title">MonoBehaviour</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Awake</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Debug.Log(<span class="string">"This is Awake!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Debug.Log(<span class="string">"This is Start!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Debug.Log(<span class="string">"This is Update!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FixedUpdate</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Debug.Log(<span class="string">"This is FixedUpdate!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">LateUpdate</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Debug.Log(<span class="string">"This is LateUpdate!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnGUI</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Debug.Log(<span class="string">"This is OnGUI!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnDisable</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Debug.Log(<span class="string">"This is OnDisable!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnEnable</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Debug.Log(<span class="string">"This is OnEnable!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>运行结果：</p>
 <p><img src="order.png" alt></p>
 </li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
 <th>事件名称</th>
-<th align="left">执行条件或时机</th>
+<th style="text-align:left">执行条件或时机</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>Awake</td>
-<td align="left">当一个脚本实例被载入时Awake被调用。或者脚本构造时调用</td>
+<td style="text-align:left">当一个脚本实例被载入时Awake被调用。或者脚本构造时调用</td>
 </tr>
 <tr>
 <td>Start</td>
-<td align="left">第一次进入游戏循环时调用</td>
+<td style="text-align:left">第一次进入游戏循环时调用</td>
 </tr>
 <tr>
 <td>FixUpdate</td>
-<td align="left">每个游戏循环，由物理引擎调用</td>
+<td style="text-align:left">每个游戏循环，由物理引擎调用</td>
 </tr>
 <tr>
 <td>Update</td>
-<td align="left">所有 Start 调用完后，被游戏循环调用</td>
+<td style="text-align:left">所有 Start 调用完后，被游戏循环调用</td>
 </tr>
 <tr>
 <td>LastUpdate</td>
-<td align="left">所有 Update 调用完后，被游戏循环调用</td>
+<td style="text-align:left">所有 Update 调用完后，被游戏循环调用</td>
 </tr>
 <tr>
 <td>OnGUI</td>
-<td align="left">游戏循环在渲染过程中，场景渲染之后调用</td>
+<td style="text-align:left">游戏循环在渲染过程中，场景渲染之后调用</td>
 </tr>
 <tr>
 <td>OnEnable</td>
-<td align="left">当对象变为可用或激活状态时被调用</td>
+<td style="text-align:left">当对象变为可用或激活状态时被调用</td>
 </tr>
 <tr>
 <td>OnDisable</td>
-<td align="left">当对象变为不可用或非激活状态时被调用</td>
+<td style="text-align:left">当对象变为不可用或非激活状态时被调用</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <ul>
 <li><p><strong>查找脚本手册，了解GameObject，Transform，Component 对象</strong></p>
 <ul>
@@ -520,14 +523,12 @@ height:50vh;
 <li><p><strong>查找对象</strong></p>
 <p>查找名为<em>zwk1</em>的GameObject 代码：</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NewBehaviourScript</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use this for initialization</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> cube = GameObject.Find(<span class="string">"zwk1"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (cube != <span class="literal">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            Debug.Log(<span class="string">"Find zwk1!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            Debug.Log(<span class="string">"There is no zwk1!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Update is called once per frame</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>运行结果：</p>
 <p><img src="find.png" alt></p>
 </li>
 <li><p><strong>添加子对象</strong></p>
 <p>添加名为<em>zwk3</em>的cube 代码：</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NewBehaviourScript</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use this for initialization</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);</span><br><span class="line">        cube.name = <span class="string">"zwk3"</span>;</span><br><span class="line">        cube.transform.position = <span class="keyword">new</span> Vector3(<span class="number">0</span>, Random.Range(<span class="number">0</span>, <span class="number">3</span>), <span class="number">0</span>);</span><br><span class="line">        cube.transform.parent = <span class="keyword">this</span>.transform;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Update is called once per frame</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>运行结果：</p>
 <p><img src="add.png" alt></p>
 <p>（注:zwk3仅在运行时出现，停止运行后自动消失）</p>
@@ -535,14 +536,12 @@ height:50vh;
 <li><p><strong>遍历对象树</strong></p>
 <p>代码：</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NewBehaviourScript</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use this for initialization</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">foreach</span> (Transform child <span class="keyword">in</span> transform)</span><br><span class="line">        &#123;</span><br><span class="line">            Debug.Log(child.name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Update is called once per frame</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
 <p>运行结果：</p>
 <p><img src="tr.png" alt></p>
 </li>
 <li><p><strong>清除所有子对象</strong></p>
 <p>代码：</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line">  <span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line">  <span class="keyword">using</span> UnityEngine;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NewBehaviourScript</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">  &#123;</span><br><span class="line">  </span><br><span class="line">      <span class="comment">// Use this for initialization</span></span><br><span class="line">      <span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>      &#123;</span><br><span class="line">          <span class="keyword">foreach</span> (Transform child <span class="keyword">in</span> transform)</span><br><span class="line">          &#123;</span><br><span class="line">              Destroy(child.gameObject);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  </span><br><span class="line">      <span class="comment">// Update is called once per frame</span></span><br><span class="line">      <span class="function"><span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>      &#123;</span><br><span class="line">  </span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
 <p>运行结果：</p>
 <p><img src="dis.png" alt></p>
 <p>（注:zwk1和zwk2仅在运行时消失，停止运行后出现）</p>
@@ -561,7 +560,6 @@ height:50vh;
 <p>首先，做出Table预制，将其放在Resources中。</p>
 <p>预制资源实例化代码如下：</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NewBehaviourScript</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> GameObject Table;</span><br><span class="line">    <span class="comment">// Use this for initialization</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        GameObject cube1 = Instantiate(Resources.Load(<span class="string">"Table"</span>) <span class="keyword">as</span> GameObject);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Update is called once per frame</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>将C#script拖放到camera上，点击运行。</p>
 <p>运行结果：</p>
 <p>（运行前）<img src="init_b.png" alt></p>
@@ -591,7 +589,6 @@ height:50vh;
 </li>
 </ul>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">game</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> player = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[,] chess = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>, <span class="number">3</span>];</span><br><span class="line">    <span class="comment">//img ----bc</span></span><br><span class="line">    <span class="keyword">public</span> Texture2D img;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Awake</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        img = (Texture2D)Resources.Load(<span class="string">"timg"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use this for initialization</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Reset();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Update is called once per frame</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Reset</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        count = <span class="number">0</span>;</span><br><span class="line">        player = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                chess[i, j] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnGUI</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">string</span> aa = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//构造一个空的GUIStyle</span></span><br><span class="line">        GUIStyle bb = <span class="keyword">new</span> GUIStyle();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//设置bb正常显示时是背景图片</span></span><br><span class="line">        bb.normal.background = img;</span><br><span class="line">        GUI.Label(<span class="keyword">new</span> Rect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1370</span>, <span class="number">780</span>), aa, bb);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//font size, text color, background color of button.</span></span><br><span class="line">        GUI.skin.button.fontSize = <span class="number">20</span>;</span><br><span class="line">        GUI.skin.label.fontSize = <span class="number">30</span>;</span><br><span class="line">        GUI.skin.label.normal.textColor = Color.black;</span><br><span class="line">        GUI.backgroundColor = Color.cyan;</span><br><span class="line"></span><br><span class="line">        GUI.Label(<span class="keyword">new</span> Rect(<span class="number">200</span>, <span class="number">180</span>, <span class="number">300</span>, <span class="number">50</span>), <span class="string">"Player1 -- O"</span>);</span><br><span class="line">        GUI.Label(<span class="keyword">new</span> Rect(<span class="number">200</span>, <span class="number">230</span>, <span class="number">300</span>, <span class="number">50</span>), <span class="string">"Player2 -- X"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//press [reset] button.</span></span><br><span class="line">        <span class="keyword">if</span> (GUI.Button(<span class="keyword">new</span> Rect(<span class="number">500</span>, <span class="number">400</span>, <span class="number">100</span>, <span class="number">50</span>), <span class="string">"Reset"</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            Reset();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//get results (if any) ---3 conditions.</span></span><br><span class="line">        <span class="keyword">int</span> result = GetResult();</span><br><span class="line">        <span class="keyword">if</span> (result == <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            GUI.Label(<span class="keyword">new</span> Rect(<span class="number">510</span>, <span class="number">20</span>, <span class="number">100</span>, <span class="number">50</span>), <span class="string">"O wins"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (result == <span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            GUI.Label(<span class="keyword">new</span> Rect(<span class="number">510</span>, <span class="number">20</span>, <span class="number">100</span>, <span class="number">50</span>), <span class="string">"X wins"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (result == <span class="number">3</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            GUI.Label(<span class="keyword">new</span> Rect(<span class="number">530</span>, <span class="number">20</span>, <span class="number">200</span>, <span class="number">50</span>), <span class="string">"Tie!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//chess 1---O   2---X</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (chess[i, j] == <span class="number">1</span>)</span><br><span class="line">                    GUI.Button(<span class="keyword">new</span> Rect(i * <span class="number">100</span> + <span class="number">400</span>, j * <span class="number">100</span> + <span class="number">80</span>, <span class="number">100</span>, <span class="number">100</span>), <span class="string">"O"</span>);</span><br><span class="line">                <span class="keyword">if</span> (chess[i, j] == <span class="number">2</span>)</span><br><span class="line">                    GUI.Button(<span class="keyword">new</span> Rect(i * <span class="number">100</span> + <span class="number">400</span>, j * <span class="number">100</span> + <span class="number">80</span>, <span class="number">100</span>, <span class="number">100</span>), <span class="string">"X"</span>);</span><br><span class="line">                <span class="comment">//play chess</span></span><br><span class="line">                <span class="keyword">if</span> (GUI.Button(<span class="keyword">new</span> Rect(i * <span class="number">100</span> + <span class="number">400</span>, j * <span class="number">100</span> + <span class="number">80</span>, <span class="number">100</span>, <span class="number">100</span>), <span class="string">""</span>) &amp;&amp; result == <span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (player == <span class="number">1</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        chess[i, j] = <span class="number">1</span>;</span><br><span class="line">                        player = <span class="number">2</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span> (player == <span class="number">2</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        chess[i, j] = <span class="number">2</span>;</span><br><span class="line">                        player = <span class="number">1</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    count++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">GetResult</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">//Rows.</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (chess[i, <span class="number">0</span>] == chess[i, <span class="number">1</span>] &amp;&amp; chess[i, <span class="number">0</span>] == chess[i, <span class="number">2</span>] &amp;&amp; chess[i, <span class="number">0</span>] != <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> chess[i, <span class="number">0</span>]; <span class="comment">//1---O wins</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//Columns.</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (chess[<span class="number">0</span>, j] == chess[<span class="number">1</span>, j] &amp;&amp; chess[<span class="number">0</span>, j] == chess[<span class="number">2</span>, j] &amp;&amp; chess[<span class="number">0</span>, j] != <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> chess[<span class="number">0</span>, j]; <span class="comment">//2---X wins</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//Diagonals.</span></span><br><span class="line">        <span class="keyword">if</span> (chess[<span class="number">0</span>, <span class="number">0</span>] == chess[<span class="number">1</span>, <span class="number">1</span>] &amp;&amp; chess[<span class="number">0</span>, <span class="number">0</span>] == chess[<span class="number">2</span>, <span class="number">2</span>] &amp;&amp; chess[<span class="number">0</span>, <span class="number">0</span>] != <span class="number">0</span>) <span class="keyword">return</span> chess[<span class="number">0</span>, <span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span> (chess[<span class="number">0</span>, <span class="number">2</span>] == chess[<span class="number">1</span>, <span class="number">1</span>] &amp;&amp; chess[<span class="number">0</span>, <span class="number">2</span>] == chess[<span class="number">2</span>, <span class="number">0</span>] &amp;&amp; chess[<span class="number">0</span>, <span class="number">2</span>] != <span class="number">0</span>) <span class="keyword">return</span> chess[<span class="number">0</span>, <span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//if the game is Tied.</span></span><br><span class="line">        <span class="keyword">if</span> (count == <span class="number">9</span>) <span class="keyword">return</span> <span class="number">3</span>;   <span class="comment">//tie!</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>​        添加背景部分的代码参考了网上的众多博客，最终选择使用代码效果来实现。首先进行加载图片，将图片资源放入<em>new Unity Project\Assets\Resources</em> ，图片的加载在Awake中进行。</p>
 <p>运行效果：</p>
 <p><img src="game.png" alt></p>
@@ -602,8 +599,6 @@ height:50vh;
 <li><p><strong>为什么是“模板方法”模式而不是“策略模式”呢？</strong></p>
 <blockquote>
 <p>策略模式：其用意是针对一组算法，将每一个算法封装到具有共同接口的独立的类中，从而使得它们可以相互替换。策略模式使得算法可以在不影响到客户端的情况下发生变化。</p>
-</blockquote>
-<blockquote>
 <p>模板方法模式：定义一个操作中算法的骨架，而将一些步骤延迟到子类中，模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。</p>
 </blockquote>
 <p>说的通俗一点，模板方法模式就是为子类设计一个模板以便于子类复用里面的方法。</p>
@@ -877,9 +872,35 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 8
+        Total : 10
         </div>
         <!-- search  -->
         
@@ -892,6 +913,16 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href= "/2019/09/24/MOSAD-HW2/" >MOSAD_HW2</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href= "/2019/09/24/AI-assignment1/" >朴素贝叶斯分类器&A*算法</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -934,18 +965,20 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/27</span><a class="archive-post-title" href= "/2017/12/27/字符游戏-智能蛇/" >字符游戏-智能蛇</a>
+            <span class="archive-post-date">12/27</span><a class="archive-post-title" href= "/2017/12/27/smartSnake/" >字符游戏-智能蛇</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/26</span><a class="archive-post-title" href= "/2017/12/26/贪吃蛇（字符版）/" >贪吃蛇（字符版）</a>
+            <span class="archive-post-date">12/26</span><a class="archive-post-title" href= "/2017/12/26/Snake/" >贪吃蛇（字符版）</a>
         </li>
     
     </div>
   </div>
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
     
         <span class="sidebar-tag-name" data-tags="ios"><span class="iconfont-archer">&#xe606;</span>ios</span>
     
@@ -994,6 +1027,8 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="3D游戏"><span class="iconfont-archer">&#xe60a;</span>3D游戏</span>
     
+        <span class="sidebar-category-name" data-categories="AI"><span class="iconfont-archer">&#xe60a;</span>AI</span>
+    
         <span class="sidebar-category-name" data-categories="MOSAD"><span class="iconfont-archer">&#xe60a;</span>MOSAD</span>
     
         <span class="sidebar-category-name" data-categories="软件工程专业导论Blog"><span class="iconfont-archer">&#xe60a;</span>软件工程专业导论Blog</span>
@@ -1035,7 +1070,23 @@ jsonContent:
     
         <script src="/scripts/share.js" async></script>    
      
-    </body>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+</body>
 </html>
 
 
