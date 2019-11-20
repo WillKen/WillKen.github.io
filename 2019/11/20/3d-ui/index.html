@@ -420,14 +420,14 @@ height:50vh;
 <li>分析两种实现的优缺点</li>
 <li>给出预制的使用方法</li>
 </ul>
-<h2 id="IMGUI实现"><a href="#IMGUI实现" class="headerlink" title="IMGUI实现"></a>IMGUI实现</h2><p><a href>项目地址</a></p>
+<h2 id="IMGUI实现"><a href="#IMGUI实现" class="headerlink" title="IMGUI实现"></a>IMGUI实现</h2><p><a href="https://github.com/WillKen/HealthBar" target="_blank" rel="noopener">项目地址</a></p>
 <p> IMGUI及时模式图形界面。它是代码驱动的 UI 系统，没有图形化设计界面，只能在 OnGUI 阶段用 GUI 系列的类绘制各种 UI 元素，因此 UI元素只能浮在游戏界面之上。 </p>
 <p>我们使用HorizontalScrollbar的宽度显示血量：<code>GUI.HorizontalScrollbar(HealthBar, 0.0f, health, 0.0f, 1.0f);</code> 创建两个button控制血量的增减。</p>
 <p>具体代码如下：</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">My_HealthBar</span> : <span class="title">MonoBehaviour</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">float</span> currentHealth;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">float</span> newHealth;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Rect HealthBar;</span><br><span class="line">    <span class="keyword">private</span> Rect <span class="keyword">add</span>;</span><br><span class="line">    <span class="keyword">private</span> Rect minus;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use this for initialization</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        HealthBar = <span class="keyword">new</span> Rect(<span class="number">50</span>, <span class="number">50</span>, <span class="number">200</span>, <span class="number">20</span>);</span><br><span class="line">        <span class="keyword">add</span> = <span class="keyword">new</span> Rect(<span class="number">200</span>, <span class="number">70</span>, <span class="number">40</span>, <span class="number">20</span>);</span><br><span class="line">        minus = <span class="keyword">new</span> Rect(<span class="number">55</span>, <span class="number">70</span>, <span class="number">40</span>, <span class="number">20</span>); </span><br><span class="line"></span><br><span class="line">        newHealth = currentHealth = <span class="number">0.75f</span>; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnGUI</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (GUI.Button(<span class="keyword">add</span>, <span class="string">"加血"</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            newHealth = newHealth + <span class="number">0.1f</span> &gt; <span class="number">1.0f</span> ? <span class="number">1.0f</span> : newHealth + <span class="number">0.1f</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (GUI.Button(minus, <span class="string">"减血"</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            newHealth = newHealth - <span class="number">0.1f</span> &lt; <span class="number">0.0f</span> ? <span class="number">0.0f</span> : newHealth - <span class="number">0.1f</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//插值计算currentHealth值，以实现血条值平滑变化</span></span><br><span class="line">        currentHealth = Mathf.Lerp(currentHealth, newHealth, <span class="number">0.05f</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 用水平滚动条的宽度作为血条的显示值</span></span><br><span class="line">        GUI.HorizontalScrollbar(HealthBar, <span class="number">0.0f</span>, currentHealth, <span class="number">0.0f</span>, <span class="number">1.0f</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>创建空游戏对象，然后将脚本拖动到游戏对象上，将其保存为预制。运行效果如下：</p>
 <p><img src="1.png" alt></p>
-<h2 id="UGUI实现"><a href="#UGUI实现" class="headerlink" title="UGUI实现"></a>UGUI实现</h2><p><a href>项目地址</a></p>
+<h2 id="UGUI实现"><a href="#UGUI实现" class="headerlink" title="UGUI实现"></a>UGUI实现</h2><p><a href="https://github.com/WillKen/HealthBar" target="_blank" rel="noopener">项目地址</a></p>
 <p>以下步骤参考了<a href="https://pmlpml.github.io/unity3d-learning/09-ui.html" target="_blank" rel="noopener">课堂资料</a></p>
 <ul>
 <li>菜单 Assets -&gt; Import Package -&gt; Characters 导入资源</li>
@@ -510,7 +510,7 @@ height:50vh;
             <p>Author：<a href="http://WillKen.github.io">WillKen Zhang</a>
             <p>原文链接：<a href="http://WillKen.github.io/2019/11/20/3d-ui/">http://WillKen.github.io/2019/11/20/3d-ui/</a>
             <p>发表日期：<a href="http://WillKen.github.io/2019/11/20/3d-ui/">November 20th 2019, 8:48:31 am</a>
-            <p>更新日期：<a href="http://WillKen.github.io/2019/11/20/3d-ui/">November 20th 2019, 6:47:35 pm</a>
+            <p>更新日期：<a href="http://WillKen.github.io/2019/11/20/3d-ui/">November 20th 2019, 6:56:16 pm</a>
             <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -655,6 +655,12 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
     
     
     
