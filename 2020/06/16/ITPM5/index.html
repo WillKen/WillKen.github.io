@@ -525,7 +525,7 @@ height:50vh;
 </div>
 <h2 id="年级微信公众号项目WBS"><a href="#年级微信公众号项目WBS" class="headerlink" title="年级微信公众号项目WBS"></a>年级微信公众号项目WBS</h2><p><strong>使用思维导图，为作业1或2构建WBS ，并使用项目管理工具制作WBS或根特图。并按要求检查工作包的可管理性，分解完整性。例如：检查测试、培训等。</strong></p>
 <h3 id="WBS"><a href="#WBS" class="headerlink" title="WBS"></a>WBS</h3><p>使用思维导图构建WBS如下：</p>
-<p><img src="1.png" alt></p>
+<p><img src="0.png" alt></p>
 <h3 id="甘特图"><a href="#甘特图" class="headerlink" title="甘特图"></a>甘特图</h3><p>整个项目的甘特图如下：</p>
 <p><img src="2.png" alt></p>
 <ul>
@@ -550,7 +550,7 @@ height:50vh;
             <p>Author：<a href="http://WillKen.github.io">WillKen Zhang</a>
             <p>原文链接：<a href="http://WillKen.github.io/2020/06/16/ITPM5/">http://WillKen.github.io/2020/06/16/ITPM5/</a>
             <p>发表日期：<a href="http://WillKen.github.io/2020/06/16/ITPM5/">June 16th 2020, 9:52:40 am</a>
-            <p>更新日期：<a href="http://WillKen.github.io/2020/06/16/ITPM5/">June 17th 2020, 4:08:36 pm</a>
+            <p>更新日期：<a href="http://WillKen.github.io/2020/06/16/ITPM5/">June 17th 2020, 4:15:01 pm</a>
             <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -695,8 +695,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
     
     
     
@@ -1236,7 +1234,23 @@ jsonContent:
     
         <script src="/scripts/share.js" async></script>    
      
-    </body>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+</body>
 </html>
 
 
