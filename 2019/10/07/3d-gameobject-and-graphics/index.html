@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="WillKen Zhang">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="WillKen Zhang">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>3D游戏编程与设计-游戏对象与图形基础 · WillKen&#39;s Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href="/assets/favicon.ico">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js" as="script">
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4fe6aa96bd8e017bf8141c73d1af0f3a";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >WillKen&#39;s Blog.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">3D游戏编程与设计-游戏对象与图形基础</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>WillKen's Blog.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            3D游戏编程与设计-游戏对象与图形基础
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Unity">Unity</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "C#">C#</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">2.3k</span>Reading time: <span class="post-count reading-time">13 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/10/07</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="游戏对象与图形基础"><a href="#游戏对象与图形基础" class="headerlink" title="游戏对象与图形基础"></a>游戏对象与图形基础</h1><h2 id="基本操作演练"><a href="#基本操作演练" class="headerlink" title="基本操作演练"></a>基本操作演练</h2><ul>
+<li><p><strong>下载 Fantasy Skybox FREE， 构建自己的游戏场景</strong></p>
+<p>（因为Fantasy Skybox FREE 与本地Unity5.0.0版本不兼容，所以下载了Skybox Series Free）</p>
+</li>
+<li><p><strong>写一个简单的总结，总结游戏对象的使用</strong></p>
+</li>
+</ul>
+<p><img src="sky.png" alt></p>
+<p>在Asset store中下载相应的天空盒。下载结束后，将其import进我们的项目。</p>
+<p>接着可以创建matrial,自己贴上六面的天空盒，当然也可以使用预置的scene直接观察效果。</p>
+<h2 id="编程实践"><a href="#编程实践" class="headerlink" title="编程实践"></a>编程实践</h2><ul>
+<li>牧师与魔鬼 动作分离版<ul>
+<li>【2019新要求】：设计一个裁判类，当游戏达到结束条件时，通知场景控制器游戏结束</li>
+</ul>
+</li>
+</ul>
+<p><img src="pattern.png" alt></p>
+<p>&emsp;&emsp;由于第一版本中，控制器会负责几乎所有的工作，是我们的项目结构显得非常臃肿没有将不同动作的逻辑区分开。在第二版本，实现了动作分离。<a href="https://github.com/WillKen/Priests-and-Devils-v2" target="_blank" rel="noopener">项目地址</a></p>
+<ul>
+<li>首先还是通过FirstController进行一些初始化工作</li>
+</ul>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> Mydirector;</span><br><span class="line"><span class="keyword">using</span> Mycontroller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FirstController</span> : <span class="title">MonoBehaviour</span>, <span class="title">SceneController</span>, <span class="title">UserAction</span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> Vector3 river = <span class="keyword">new</span> Vector3(<span class="number">6</span>,<span class="number">-0.5F</span>,<span class="number">0</span>);</span><br><span class="line">	UserInterface userGUI;</span><br><span class="line">	<span class="keyword">public</span> CoastController fromCoast;</span><br><span class="line">	<span class="keyword">public</span> CoastController toCoast;</span><br><span class="line">	<span class="keyword">public</span> BoatController boat;</span><br><span class="line">	<span class="keyword">private</span> Mycontroller.CharacterController[] characters;</span><br><span class="line">	<span class="keyword">public</span> Move actionManager;</span><br><span class="line">	Judge judge;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Awake</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		Director director = Director.getInstace ();</span><br><span class="line">		director.current = <span class="keyword">this</span>;</span><br><span class="line">		userGUI = gameObject.AddComponent &lt;UserInterface&gt;() <span class="keyword">as</span> UserInterface;</span><br><span class="line">		characters = <span class="keyword">new</span> Mycontroller.CharacterController[<span class="number">6</span>];</span><br><span class="line">		loadResources ();</span><br><span class="line">		actionManager = gameObject.AddComponent&lt;Move&gt; ()<span class="keyword">as</span> Move;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadResources</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		GameObject Water = Instantiate (Resources.Load (<span class="string">"Prefab/water"</span>, <span class="keyword">typeof</span>(GameObject)),river,Quaternion.identity,<span class="literal">null</span>) <span class="keyword">as</span> GameObject;</span><br><span class="line"></span><br><span class="line">		Water.name = <span class="string">"Water"</span>;</span><br><span class="line">		fromCoast = <span class="keyword">new</span> CoastController (<span class="string">"from"</span>);</span><br><span class="line">		toCoast = <span class="keyword">new</span> CoastController (<span class="string">"to"</span>);</span><br><span class="line">		boat = <span class="keyword">new</span> BoatController ();</span><br><span class="line">		judge = <span class="keyword">new</span> Judge (fromCoast, toCoast, boat);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">			Mycontroller.CharacterController cha = <span class="keyword">new</span> Mycontroller.CharacterController (<span class="string">"priest"</span>);</span><br><span class="line">			cha.setName(<span class="string">"priest"</span> + i);</span><br><span class="line">			cha.setPos (fromCoast.getEmptyPos ());</span><br><span class="line">			cha.getOnCoast (fromCoast);</span><br><span class="line">			fromCoast.getOnCoast (cha);</span><br><span class="line">			characters [i] = cha;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">			Mycontroller.CharacterController cha = <span class="keyword">new</span> Mycontroller.CharacterController (<span class="string">"devil"</span>);</span><br><span class="line">			cha.setName(<span class="string">"devil"</span> + i);</span><br><span class="line">			cha.setPos (fromCoast.getEmptyPos());</span><br><span class="line">			cha.getOnCoast (fromCoast);</span><br><span class="line">			fromCoast.getOnCoast (cha);</span><br><span class="line">			characters [i+<span class="number">3</span>] = cha;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">moveBoat</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (boat.is_empty ())</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		actionManager.moveBoat (boat.getGameobj (), boat.Move_to (), boat.speed);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">moveCharacter</span>(<span class="params">Mycontroller.CharacterController characterCtrl</span>)</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (characterCtrl.Is_On_Boat ()) &#123;</span><br><span class="line">			CoastController whichCoast;</span><br><span class="line">			<span class="keyword">if</span> (boat.get_is_from () == <span class="number">-1</span>) &#123;</span><br><span class="line">				whichCoast = toCoast;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				whichCoast = fromCoast;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			boat.GetOffBoat (characterCtrl.getName());</span><br><span class="line"></span><br><span class="line">			Vector3 end_pos = whichCoast.getEmptyPos();</span><br><span class="line">			Vector3 mid_pos = <span class="keyword">new</span> Vector3 (characterCtrl.getGameobj ().transform.position.x,end_pos.y, end_pos.z);</span><br><span class="line">			actionManager.moveCharacter(characterCtrl.getGameobj(),mid_pos,end_pos,characterCtrl.move_speed);</span><br><span class="line">			characterCtrl.getOnCoast (whichCoast);</span><br><span class="line">			whichCoast.getOnCoast (characterCtrl);</span><br><span class="line"></span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;								</span><br><span class="line">			CoastController whichCoast = characterCtrl.getCoastController ();</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (boat.getEmptyIndex () == <span class="number">-1</span>) &#123;		</span><br><span class="line">				<span class="keyword">return</span>;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (whichCoast.get_is_from () != boat.get_is_from ())	</span><br><span class="line">				<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">			whichCoast.getOffCoast(characterCtrl.getName());</span><br><span class="line"></span><br><span class="line">			Vector3 end_pos = boat.getEmptyPosition();</span><br><span class="line">			Vector3 mid_pos = <span class="keyword">new</span> Vector3 (end_pos.x,characterCtrl.getGameobj().transform.position.y,end_pos.z);</span><br><span class="line">			actionManager.moveCharacter(characterCtrl.getGameobj(),mid_pos,end_pos,characterCtrl.move_speed);</span><br><span class="line"></span><br><span class="line">			characterCtrl.getOnBoat (boat);</span><br><span class="line">			boat.GetOnBoat (characterCtrl);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">restart</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		boat.reset ();</span><br><span class="line">		fromCoast.reset ();</span><br><span class="line">		toCoast.reset ();</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; characters.Length; i++) &#123;</span><br><span class="line">			characters [i].reset ();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>)</span> &#123;</span><br><span class="line">		userGUI.status = judge.check ();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ActionBase中实现了动作分离的相关定义</li>
+</ul>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Myaction</span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CCMoveToAction</span> : <span class="title">SSAction</span> &#123;</span><br><span class="line">		<span class="keyword">public</span> Vector3 target;</span><br><span class="line">		<span class="keyword">public</span> <span class="keyword">float</span> speed;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CCMoveToAction <span class="title">GetSSAction</span>(<span class="params">Vector3 target, <span class="keyword">float</span> speed</span>)</span> &#123;</span><br><span class="line">			CCMoveToAction action = ScriptableObject.CreateInstance&lt;CCMoveToAction&gt;();</span><br><span class="line">			action.target = target;</span><br><span class="line">			action.speed = speed;</span><br><span class="line">			<span class="keyword">return</span> action;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>)</span> &#123;</span><br><span class="line">			<span class="keyword">this</span>.transform.position = Vector3.MoveTowards(<span class="keyword">this</span>.transform.position,target,speed);</span><br><span class="line">			<span class="keyword">if</span>(<span class="keyword">this</span>.transform.position == target) &#123;</span><br><span class="line">				<span class="keyword">this</span>.destroy = <span class="literal">true</span>;</span><br><span class="line">				<span class="keyword">this</span>.callback.SSActionEvent(<span class="keyword">this</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CCSequenceAction</span> : <span class="title">SSAction</span>, <span class="title">ISSActionCallback</span> &#123;</span><br><span class="line">		<span class="keyword">public</span> List&lt;SSAction&gt; sequence;</span><br><span class="line">		<span class="keyword">public</span> <span class="keyword">int</span> repeat = <span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">public</span> <span class="keyword">int</span> start = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CCSequenceAction <span class="title">GetSSAction</span>(<span class="params"><span class="keyword">int</span> repeat, <span class="keyword">int</span> start, List&lt;SSAction&gt; sequence</span>)</span> &#123;</span><br><span class="line">			CCSequenceAction action = ScriptableObject.CreateInstance&lt;CCSequenceAction&gt;();</span><br><span class="line">			action.repeat = repeat;</span><br><span class="line">			action.sequence = sequence;</span><br><span class="line">			action.start = start;</span><br><span class="line">			<span class="keyword">return</span> action;</span><br><span class="line">		&#125;</span><br><span class="line">			</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (sequence.Count == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">			<span class="keyword">if</span> (start &lt; sequence.Count)</span><br><span class="line">				sequence[start].Update();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SSActionEvent</span>(<span class="params">SSAction source, SSActionEventType events = SSActionEventType.Completed,</span></span></span><br><span class="line"><span class="function"><span class="params">			<span class="keyword">int</span> intParam = <span class="number">0</span>, <span class="keyword">string</span> strParam = <span class="literal">null</span>, Object objectParam = <span class="literal">null</span></span>)</span> &#123;</span><br><span class="line">			source.destroy = <span class="literal">false</span>;</span><br><span class="line">			<span class="keyword">this</span>.start++;</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">this</span>.start &gt;= sequence.Count) &#123;</span><br><span class="line">				<span class="keyword">this</span>.start = <span class="number">0</span>;</span><br><span class="line">				<span class="keyword">if</span> (repeat &gt; <span class="number">0</span>) repeat--;</span><br><span class="line">				<span class="keyword">if</span> (repeat == <span class="number">0</span>) &#123;</span><br><span class="line">					<span class="keyword">this</span>.destroy = <span class="literal">true</span>;</span><br><span class="line">					<span class="keyword">this</span>.callback.SSActionEvent(<span class="keyword">this</span>);</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> &#123;</span><br><span class="line">					sequence[start].Start();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">			</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">			<span class="keyword">foreach</span> (SSAction action <span class="keyword">in</span> sequence) &#123;</span><br><span class="line">				action.gameobject = <span class="keyword">this</span>.gameobject;</span><br><span class="line">				action.transform = <span class="keyword">this</span>.transform;</span><br><span class="line">				action.callback = <span class="keyword">this</span>;</span><br><span class="line">				action.Start();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnDestroy</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SSAction</span> : <span class="title">ScriptableObject</span>            </span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">public</span> <span class="keyword">bool</span> enable = <span class="literal">true</span>;                    </span><br><span class="line">		<span class="keyword">public</span> <span class="keyword">bool</span> destroy = <span class="literal">false</span>;                  </span><br><span class="line">		<span class="keyword">public</span> GameObject gameobject;                </span><br><span class="line">		<span class="keyword">public</span> Transform transform;                 </span><br><span class="line">		<span class="keyword">public</span> ISSActionCallback callback;            </span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">protected</span> <span class="title">SSAction</span>(<span class="params"></span>)</span> &#123; &#125;                        </span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)                  </span></span><br><span class="line"><span class="function"></span>		&#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> System.NotImplementedException();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>		&#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> System.NotImplementedException();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">enum</span> SSActionEventType : <span class="keyword">int</span> &#123; Started, Completed &#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ISSActionCallback</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">SSActionEvent</span>(<span class="params">SSAction source, SSActionEventType events = SSActionEventType.Completed,</span></span></span><br><span class="line"><span class="function"><span class="params">			<span class="keyword">int</span> intParam = <span class="number">0</span>, <span class="keyword">string</span> strParam = <span class="literal">null</span>, Object objectParam = <span class="literal">null</span></span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SSActionManager</span> : <span class="title">MonoBehaviour</span> ,<span class="title">ISSActionCallback</span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">private</span> Dictionary &lt;<span class="keyword">int</span>, SSAction&gt; actions = <span class="keyword">new</span> Dictionary &lt;<span class="keyword">int</span>, SSAction&gt; (); </span><br><span class="line">		<span class="keyword">private</span> List &lt;SSAction&gt; waitingAdd = <span class="keyword">new</span> List &lt;SSAction&gt; ();</span><br><span class="line">		<span class="keyword">private</span> List &lt;<span class="keyword">int</span>&gt; waitingDelete = <span class="keyword">new</span> List &lt;<span class="keyword">int</span>&gt; ();</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Update</span> (<span class="params"></span>)</span> &#123;</span><br><span class="line">			<span class="keyword">foreach</span> (SSAction ac <span class="keyword">in</span> waitingAdd)</span><br><span class="line">				actions [ac.GetInstanceID ()] = ac;</span><br><span class="line">			waitingAdd.Clear ();</span><br><span class="line"></span><br><span class="line">			<span class="keyword">foreach</span> (KeyValuePair &lt;<span class="keyword">int</span>,SSAction&gt; kv <span class="keyword">in</span> actions) &#123;</span><br><span class="line">				SSAction ac = kv.Value;</span><br><span class="line">				<span class="keyword">if</span> (ac.destroy) &#123;</span><br><span class="line">					waitingDelete.Add (ac.GetInstanceID ()); </span><br><span class="line">				&#125; <span class="keyword">else</span> <span class="keyword">if</span> (ac.enable) &#123;</span><br><span class="line">					ac.Update (); </span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">foreach</span> (<span class="keyword">int</span> key <span class="keyword">in</span> waitingDelete) &#123;</span><br><span class="line">				SSAction ac = actions [key];</span><br><span class="line">				actions.Remove (key);</span><br><span class="line">				DestroyObject (ac);</span><br><span class="line">			&#125;</span><br><span class="line">			waitingDelete.Clear ();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RunAction</span> (<span class="params">GameObject gameObject, SSAction action, ISSActionCallback manager</span>)</span> &#123;</span><br><span class="line">			action.gameobject = gameObject;</span><br><span class="line">			action.transform = gameObject.transform;</span><br><span class="line">			action.callback = manager;</span><br><span class="line">			waitingAdd.Add (action);</span><br><span class="line">			action.Start ();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Start</span> (<span class="params"></span>)</span> &#123;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SSActionEvent</span>(<span class="params">SSAction source, SSActionEventType events = SSActionEventType.Completed,</span></span></span><br><span class="line"><span class="function"><span class="params">			<span class="keyword">int</span> intParam = <span class="number">0</span>, <span class="keyword">string</span> strParam = <span class="literal">null</span>, Object objectParam = <span class="literal">null</span></span>)</span></span><br><span class="line"><span class="function"></span>		&#123;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ControllerBase中包含不同对象的控制器</li>
+</ul>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> Mydirector;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Mycontroller</span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Boat</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BoatController</span> &#123;</span><br><span class="line">		<span class="keyword">private</span> GameObject boat;</span><br><span class="line">		<span class="keyword">private</span> Vector3 From = <span class="keyword">new</span> Vector3 (<span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">		<span class="keyword">private</span> Vector3 To = <span class="keyword">new</span> Vector3 (<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">		<span class="keyword">private</span> Vector3[] from_positions;</span><br><span class="line">		<span class="keyword">private</span> Vector3[] to_positions;</span><br><span class="line">		<span class="keyword">int</span> is_from;</span><br><span class="line">		CharacterController[] characters = <span class="keyword">new</span> CharacterController[<span class="number">2</span>];</span><br><span class="line">		<span class="keyword">private</span> Move move;</span><br><span class="line">		<span class="keyword">public</span> <span class="keyword">float</span> speed = <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">BoatController</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">			is_from = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">			from_positions = <span class="keyword">new</span> Vector3[] &#123; <span class="keyword">new</span> Vector3 (<span class="number">4.5F</span>,<span class="number">0.5F</span>,<span class="number">0</span>), <span class="keyword">new</span> Vector3 (<span class="number">3.5F</span>,<span class="number">0.5F</span>,<span class="number">0</span>) &#125;;</span><br><span class="line">			to_positions = <span class="keyword">new</span> Vector3[] &#123; <span class="keyword">new</span> Vector3 (<span class="number">8.5F</span>, <span class="number">0.5F</span>, <span class="number">0</span>), <span class="keyword">new</span> Vector3 (<span class="number">7.5F</span>, <span class="number">0.5F</span>, <span class="number">0</span>) &#125;;</span><br><span class="line"></span><br><span class="line">			boat = Object.Instantiate (Resources.Load (<span class="string">"Prefab/boat"</span>, <span class="keyword">typeof</span>(GameObject)), From, Quaternion.identity, <span class="literal">null</span>) <span class="keyword">as</span> GameObject;</span><br><span class="line">			boat.name = <span class="string">"boat"</span>;</span><br><span class="line"></span><br><span class="line">			move = boat.AddComponent (<span class="keyword">typeof</span>(Move)) <span class="keyword">as</span> Move;</span><br><span class="line">			boat.AddComponent (<span class="keyword">typeof</span>(UserClick));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">bool</span> <span class="title">is_empty</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; characters.Length; i++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (characters [i] != <span class="literal">null</span>) &#123;</span><br><span class="line">					<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> Vector3 <span class="title">Move_to</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (is_from == <span class="number">-1</span>) &#123;</span><br><span class="line">				is_from = <span class="number">1</span>;</span><br><span class="line">				<span class="keyword">return</span> From;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				is_from = <span class="number">-1</span>;</span><br><span class="line">				<span class="keyword">return</span> To;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getEmptyIndex</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; characters.Length; i++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (characters [i] == <span class="literal">null</span>) &#123;</span><br><span class="line">					<span class="keyword">return</span> i;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> Vector3 <span class="title">getEmptyPosition</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">			Vector3 pos;</span><br><span class="line">			<span class="keyword">int</span> emptyIndex = <span class="number">-1</span>;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; characters.Length; i++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (characters [i] == <span class="literal">null</span>) &#123;</span><br><span class="line">					emptyIndex = i;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (is_from == <span class="number">-1</span>) &#123;</span><br><span class="line">				pos = to_positions[emptyIndex];</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				pos = from_positions[emptyIndex];</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> pos;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GetOnBoat</span>(<span class="params">CharacterController characterCtrl</span>)</span> &#123;</span><br><span class="line">			<span class="keyword">int</span> index = <span class="number">-1</span>;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; characters.Length; i++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (characters [i] == <span class="literal">null</span>) &#123;</span><br><span class="line">					index = i;</span><br><span class="line"></span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			characters [index] = characterCtrl;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> CharacterController <span class="title">GetOffBoat</span>(<span class="params"><span class="keyword">string</span> characters_name</span>)</span> &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; characters.Length; i++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (characters [i] != <span class="literal">null</span> &amp;&amp; characters [i].getName () == characters_name) &#123;</span><br><span class="line">					CharacterController cc = characters [i];</span><br><span class="line">					characters [i] = <span class="literal">null</span>;</span><br><span class="line">					<span class="keyword">return</span> cc;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> GameObject <span class="title">getGameobj</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> boat;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get_is_from</span>(<span class="params"></span>)</span> &#123; </span><br><span class="line">			<span class="keyword">return</span> is_from;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">int</span>[] <span class="title">getCharacterNum</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">			<span class="keyword">int</span>[] count = &#123;<span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; characters.Length; i++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (characters [i] == <span class="literal">null</span>)</span><br><span class="line">					<span class="keyword">continue</span>;</span><br><span class="line">				<span class="keyword">if</span> (!characters [i].Is_Devil ()) &#123;</span><br><span class="line">					count[<span class="number">0</span>]++;</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					count[<span class="number">1</span>]++;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> count;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reset</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (is_from == <span class="number">-1</span>) &#123;</span><br><span class="line">				Move_to ();</span><br><span class="line">			&#125;</span><br><span class="line">			boat.transform.position = From;</span><br><span class="line">			characters = <span class="keyword">new</span> CharacterController[<span class="number">2</span>];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">//coat</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CoastController</span>&#123;</span><br><span class="line">		<span class="keyword">private</span> GameObject coast;</span><br><span class="line">		<span class="keyword">private</span> Vector3 From = <span class="keyword">new</span> Vector3 (<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">		<span class="keyword">private</span> Vector3 To = <span class="keyword">new</span> Vector3(<span class="number">12</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">		<span class="keyword">private</span> Vector3[] positions;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">int</span> is_from;</span><br><span class="line">		<span class="keyword">private</span> CharacterController[] characters;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">CoastController</span>(<span class="params"><span class="keyword">string</span> Where</span>)</span>&#123;</span><br><span class="line">			positions = <span class="keyword">new</span> Vector3[] &#123;<span class="keyword">new</span> Vector3 (<span class="number">2.5F</span>,<span class="number">1.25F</span>,<span class="number">0</span>),<span class="keyword">new</span> Vector3 (<span class="number">1.5F</span>,<span class="number">1.25F</span>,<span class="number">0</span>), <span class="keyword">new</span> Vector3 (<span class="number">0.5F</span>,<span class="number">1.25F</span>,<span class="number">0</span>),<span class="keyword">new</span> Vector3 (<span class="number">-0.5F</span>,<span class="number">1.25F</span>,<span class="number">0</span>),<span class="keyword">new</span> Vector3 (<span class="number">-1.5F</span>,<span class="number">1.25F</span>,<span class="number">0</span>),<span class="keyword">new</span> Vector3 (<span class="number">-2.5F</span>,<span class="number">1.25F</span>,<span class="number">0</span>)</span><br><span class="line">			&#125;;</span><br><span class="line">			characters = <span class="keyword">new</span> CharacterController[<span class="number">6</span>];</span><br><span class="line">			<span class="keyword">if</span> (Where == <span class="string">"from"</span>) &#123;</span><br><span class="line">				coast = Object.Instantiate (Resources.Load (<span class="string">"Prefab/stone"</span>, <span class="keyword">typeof</span>(GameObject)), From, Quaternion.identity, <span class="literal">null</span>) <span class="keyword">as</span> GameObject;</span><br><span class="line">				coast.name = <span class="string">"from"</span>;</span><br><span class="line">				is_from = <span class="number">1</span>;</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span>(Where == <span class="string">"to"</span>)&#123;</span><br><span class="line">				coast = Object.Instantiate (Resources.Load (<span class="string">"Prefab/stone"</span>, <span class="keyword">typeof</span>(GameObject)), To, Quaternion.identity, <span class="literal">null</span>) <span class="keyword">as</span> GameObject;</span><br><span class="line">				coast.name = <span class="string">"to"</span>;</span><br><span class="line">				is_from = <span class="number">-1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> Vector3 <span class="title">getEmptyPos</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">int</span> index = <span class="number">-1</span>;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; characters.Length; i++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (characters [i] == <span class="literal">null</span>) &#123;</span><br><span class="line">					index = i;</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			Vector3 pos = positions [index];</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span>(is_from==<span class="number">-1</span>)</span><br><span class="line">				pos.x +=<span class="number">12</span>;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">return</span> pos;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getOnCoast</span>(<span class="params">CharacterController character_ctrl</span>)</span>&#123;</span><br><span class="line">			<span class="keyword">int</span> index = <span class="number">-1</span>;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; characters.Length; i++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (characters [i] == <span class="literal">null</span>) &#123;</span><br><span class="line">					index = i;</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			characters [index] = character_ctrl;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> CharacterController <span class="title">getOffCoast</span>(<span class="params"><span class="keyword">string</span> character_name</span>)</span>&#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; characters.Length; i++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (characters [i] != <span class="literal">null</span> &amp;&amp; characters [i].getName () == character_name) &#123;</span><br><span class="line">					CharacterController cc = characters [i];</span><br><span class="line">					characters [i] = <span class="literal">null</span>;</span><br><span class="line">					<span class="keyword">return</span> cc;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get_is_from</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> is_from;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">int</span>[] <span class="title">get_character_num</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">int</span>[] num = &#123; <span class="number">0</span>, <span class="number">0</span> &#125;;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; characters.Length; i++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (characters [i] == <span class="literal">null</span>)</span><br><span class="line">					<span class="keyword">continue</span>;</span><br><span class="line">				<span class="keyword">if</span> (!characters[i].Is_Devil ()) &#123;</span><br><span class="line">					num [<span class="number">0</span>]++;</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					num [<span class="number">1</span>]++;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> num;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reset</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			characters = <span class="keyword">new</span> CharacterController[<span class="number">6</span>];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">//character</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CharacterController</span>&#123;</span><br><span class="line">		<span class="keyword">private</span> GameObject character;</span><br><span class="line">		<span class="keyword">private</span> Move move;</span><br><span class="line">		<span class="keyword">private</span> UserClick click;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">bool</span> is_devil;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">bool</span> is_on_boat = <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">private</span> CoastController coast;</span><br><span class="line">		<span class="keyword">public</span> <span class="keyword">float</span> move_speed = <span class="number">30</span>;</span><br><span class="line">		<span class="comment">// Use this for initialization</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">CharacterController</span>(<span class="params"><span class="keyword">string</span> name</span>)</span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(name == <span class="string">"priest"</span>)&#123;</span><br><span class="line">				character = Object.Instantiate(Resources.Load(<span class="string">"Prefab/priest"</span>,<span class="keyword">typeof</span>(GameObject)),Vector3.zero,Quaternion.identity,<span class="literal">null</span>) <span class="keyword">as</span> GameObject;</span><br><span class="line">				is_devil = <span class="literal">false</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(name == <span class="string">"devil"</span>)&#123;</span><br><span class="line">				character = Object.Instantiate(Resources.Load(<span class="string">"Prefab/devil"</span>,<span class="keyword">typeof</span>(GameObject)),Vector3.zero,Quaternion.identity,<span class="literal">null</span>) <span class="keyword">as</span> GameObject;</span><br><span class="line">				is_devil = <span class="literal">true</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			move = character.AddComponent(<span class="keyword">typeof</span>(Move))<span class="keyword">as</span> Move;</span><br><span class="line">			click = character.AddComponent(<span class="keyword">typeof</span>(UserClick))<span class="keyword">as</span> UserClick;</span><br><span class="line">			click.setController(<span class="keyword">this</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span>(<span class="params"><span class="keyword">string</span> _name</span>)</span>&#123;</span><br><span class="line">			character.name = _name;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">getName</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> character.name;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">bool</span> <span class="title">Is_Devil</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> is_devil;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">bool</span> <span class="title">Is_On_Boat</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> is_on_boat;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPos</span>(<span class="params">Vector3 pos</span>)</span>&#123;</span><br><span class="line">			character.transform.position = pos;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> Vector3 <span class="title">getPos</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> character.transform.position;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> GameObject <span class="title">getGameobj</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> character;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> CoastController <span class="title">getCoastController</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> coast;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getOnBoat</span>(<span class="params">BoatController boatCtrl</span>)</span> &#123;</span><br><span class="line">			coast = <span class="literal">null</span>;</span><br><span class="line">			character.transform.parent = boatCtrl.getGameobj().transform;</span><br><span class="line">			is_on_boat = <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getOnCoast</span>(<span class="params">CoastController coastCtrl</span>)</span> &#123;</span><br><span class="line">			coast = coastCtrl;</span><br><span class="line">			character.transform.parent = <span class="literal">null</span>;</span><br><span class="line">			is_on_boat = <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reset</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">			coast = (Director.getInstace ().current <span class="keyword">as</span> FirstController).fromCoast;</span><br><span class="line">			getOnCoast (coast);</span><br><span class="line">			setPos (coast.getEmptyPos());</span><br><span class="line">			coast.getOnCoast (<span class="keyword">this</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Judge中是游戏结束的判断。FirstController中Update一直对其调用，以实现“当游戏达到结束条件时，通知场景控制器游戏结束”</li>
+</ul>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> Mycontroller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Judge</span> : <span class="title">MonoBehaviour</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> CoastController From;</span><br><span class="line">	<span class="keyword">private</span> CoastController To;</span><br><span class="line">	<span class="keyword">private</span> BoatController Boat;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Judge</span>(<span class="params">CoastController from_coast,CoastController to_coast,BoatController boat</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		<span class="keyword">this</span>.From = from_coast;</span><br><span class="line">		<span class="keyword">this</span>.Boat = boat;</span><br><span class="line">		<span class="keyword">this</span>.To = to_coast;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">check</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		<span class="keyword">int</span> from_priest = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> from_devil = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> to_priest = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> to_devil = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span>[] fromCount = From.get_character_num ();</span><br><span class="line">		from_priest += fromCount[<span class="number">0</span>];</span><br><span class="line">		from_devil += fromCount[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span>[] toCount = To.get_character_num ();</span><br><span class="line">		to_priest += toCount[<span class="number">0</span>];</span><br><span class="line">		to_devil += toCount[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (to_priest + to_devil == <span class="number">6</span>)		</span><br><span class="line">			<span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span>[] boatCount = Boat.getCharacterNum ();</span><br><span class="line">		<span class="keyword">if</span> (Boat.get_is_from () == <span class="number">-1</span>) &#123;	</span><br><span class="line">			to_priest += boatCount[<span class="number">0</span>];</span><br><span class="line">			to_devil += boatCount[<span class="number">1</span>];</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;	</span><br><span class="line">			from_priest += boatCount[<span class="number">0</span>];</span><br><span class="line">			from_devil += boatCount[<span class="number">1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (from_priest &lt; from_devil &amp;&amp; from_priest &gt; <span class="number">0</span>) &#123;	</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (to_priest &lt; to_devil &amp;&amp; to_priest &gt; <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="材料与渲染联系"><a href="#材料与渲染联系" class="headerlink" title="材料与渲染联系"></a>材料与渲染联系</h2><ul>
+<li><p>从 Unity 5 开始，使用新的 Standard Shader 作为自然场景的渲染。</p>
+<ul>
+<li>阅读官方 <a href="https://docs.unity3d.com/Manual/shader-StandardShader.html" target="_blank" rel="noopener">Standard Shader</a> 手册 。</li>
+<li>选择合适内容，如 <a href="https://docs.unity3d.com/Manual/StandardShaderMaterialParameterAlbedoColor.html" target="_blank" rel="noopener">Albedo Color and Transparency</a>，寻找合适素材，用博客展示相关效果的呈现</li>
+</ul>
+<p>以Transparency为例</p>
+<p>首先，展示正常的模型</p>
+<p><img src="m1.png" alt></p>
+<p>在Inspector中选择static； Rendering Model 选择Transparent</p>
+<p><img src="m2.png" alt></p>
+<p>在Albedo中调整A通道的值实现透明效果</p>
+<p><img src="m3.png" alt></p>
+</li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="http://WillKen.github.io">WillKen Zhang</a>
+            <p>原文链接：<a href="http://WillKen.github.io/2019/10/07/3d-gameobject-and-graphics/">http://WillKen.github.io/2019/10/07/3d-gameobject-and-graphics/</a>
+            <p>发表日期：<a href="http://WillKen.github.io/2019/10/07/3d-gameobject-and-graphics/">October 7th 2019, 1:00:59 pm</a>
+            <p>更新日期：<a href="http://WillKen.github.io/2019/10/07/3d-gameobject-and-graphics/">December 9th 2021, 4:40:28 pm</a>
+            <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2019/10/09/3d-interaction-with-gameworld/" title= "3D游戏编程与设计-与游戏世界交互">
+                    <div class="nextTitle">3D游戏编程与设计-与游戏世界交互</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/09/24/MOSAD-HW2/" title= "MOSAD_HW2">
+                    <div class="prevTitle">MOSAD_HW2</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:501352226@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/WillKen" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/wechat.png" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#游戏对象与图形基础"><span class="toc-number">1.</span> <span class="toc-text">游戏对象与图形基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本操作演练"><span class="toc-number">1.1.</span> <span class="toc-text">基本操作演练</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编程实践"><span class="toc-number">1.2.</span> <span class="toc-text">编程实践</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#材料与渲染联系"><span class="toc-number">1.3.</span> <span class="toc-text">材料与渲染联系</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 27
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/09</span><a class="archive-post-title" href= "/2021/12/09/test-from-new-computer/" >test from new computer[title]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/28</span><a class="archive-post-title" href= "/2020/07/28/ITPM8/" >IT项目管理-8</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/20</span><a class="archive-post-title" href= "/2020/07/20/ITPM7/" >IT项目管理-7</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/15</span><a class="archive-post-title" href= "/2020/07/15/ITPM6/" >IT项目管理-6</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/16</span><a class="archive-post-title" href= "/2020/06/16/ITPM5/" >IT项目管理-5</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/02</span><a class="archive-post-title" href= "/2020/06/02/ITPM4/" >IT项目管理-4</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href= "/2020/05/19/ITPM3/" >IT项目管理-3</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2020/05/06/ITPM2/" >IT项目管理-2</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2020/05/01/ITPM1/" >IT项目管理-1</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/23</span><a class="archive-post-title" href= "/2019/12/23/AR-and-MR/" >3D游戏编程与设计-AR/MR技术</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/07</span><a class="archive-post-title" href= "/2019/12/07/3d-intelligent/" >3D游戏编程与设计-游戏智能</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/20</span><a class="archive-post-title" href= "/2019/11/20/3d-ui/" >3D游戏编程与设计-UI系统</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/06</span><a class="archive-post-title" href= "/2019/11/06/3d-particle-system/" >3D游戏编程与设计-粒子系统</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2019/10/23/3d-model-and-animation/" >3D游戏编程与设计-模型与动画</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/16</span><a class="archive-post-title" href= "/2019/10/16/3d-physics-and-collision/" >3D游戏编程与设计-物理系统与碰撞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/09</span><a class="archive-post-title" href= "/2019/10/09/3d-interaction-with-gameworld/" >3D游戏编程与设计-与游戏世界交互</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/07</span><a class="archive-post-title" href= "/2019/10/07/3d-gameobject-and-graphics/" >3D游戏编程与设计-游戏对象与图形基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href= "/2019/09/24/MOSAD-HW2/" >MOSAD_HW2</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href= "/2019/09/24/AI-assignment1/" >朴素贝叶斯分类器&A*算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2019/09/21/3d-space-and-motion/" >3D游戏编程与设计-空间与运动</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/16</span><a class="archive-post-title" href= "/2019/09/16/Objective-C-Notes/" >Objective-C Notes</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/11</span><a class="archive-post-title" href= "/2019/09/11/3D游戏-离散仿真引擎基础/" >3D游戏-离散仿真引擎基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/03</span><a class="archive-post-title" href= "/2019/09/03/3D游戏-游戏的本质/" >3D游戏-游戏的本质</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/01</span><a class="archive-post-title" href= "/2019/09/01/MOSAD-HW1/" >MOSAD_HW1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2019/02/23/Web 2.0 homework/" >Web 2.0 homework</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/27</span><a class="archive-post-title" href= "/2017/12/27/smartSnake/" >字符游戏-智能蛇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/26</span><a class="archive-post-title" href= "/2017/12/26/Snake/" >贪吃蛇（字符版）</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Unity"><span class="iconfont-archer">&#xe606;</span>Unity</span>
+    
+        <span class="sidebar-tag-name" data-tags="C#"><span class="iconfont-archer">&#xe606;</span>C#</span>
+    
+        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
+    
+        <span class="sidebar-tag-name" data-tags="ios"><span class="iconfont-archer">&#xe606;</span>ios</span>
+    
+        <span class="sidebar-tag-name" data-tags="Objective-C"><span class="iconfont-archer">&#xe606;</span>Objective-C</span>
+    
+        <span class="sidebar-tag-name" data-tags="C/C++"><span class="iconfont-archer">&#xe606;</span>C/C++</span>
+    
+        <span class="sidebar-tag-name" data-tags="Web"><span class="iconfont-archer">&#xe606;</span>Web</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="3D游戏"><span class="iconfont-archer">&#xe60a;</span>3D游戏</span>
+    
+        <span class="sidebar-category-name" data-categories="AI"><span class="iconfont-archer">&#xe60a;</span>AI</span>
+    
+        <span class="sidebar-category-name" data-categories="IT项目管理"><span class="iconfont-archer">&#xe60a;</span>IT项目管理</span>
+    
+        <span class="sidebar-category-name" data-categories="MOSAD"><span class="iconfont-archer">&#xe60a;</span>MOSAD</span>
+    
+        <span class="sidebar-category-name" data-categories="软件工程专业导论Blog"><span class="iconfont-archer">&#xe60a;</span>软件工程专业导论Blog</span>
+    
+        <span class="sidebar-category-name" data-categories="Web"><span class="iconfont-archer">&#xe60a;</span>Web</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "WillKen Zhang"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
