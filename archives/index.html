@@ -356,29 +356,6 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2021/12/09/test-from-new-computer/" >
-            
-                <span>test from new computer[title]</span>
-        </a>
-        <div class="abstract-content">
-            test[paper title]
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/12/09</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
         <a class="abstract-title" href = "/2020/07/28/ITPM8/" >
             
                 <span>IT项目管理-8</span>
@@ -833,6 +810,50 @@ Unity3d使用在Unity中新建项目。
         </div>
     </article>
     
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/12/07/3d-intelligent/" >
+            
+                <span>3D游戏编程与设计-游戏智能</span>
+        </a>
+        <div class="abstract-content">
+            游戏智能P&amp;D 过河游戏智能帮助实现，程序具体要求：
+
+实现状态图的自动生成
+讲解图数据在程序中的表示方法
+利用算法实现下一步的计算
+参考：P&amp;D 过河游戏智能帮助实现
+
+代码原理本次游戏基于之前的Priests&amp;Devils过河小游戏。在原先的基础上增加了”AI Move”，能够提示用户进行正确的操作。
+基本原理是：根据当前左岸上的牧师和恶魔数量以及船停靠的位置来判断下一步动作。
+状态转换状态转换图如下图所示：
+
+相应代码如下：
+采用P_D[]来记录要移动的角色。P_D[0]是要向对岸移动的牧师的数量。P_D[1]是要向对岸移动的恶魔的数量。
+123456789...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/07</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Unity">Unity</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "C#">C#</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
     <!-- paginator  -->
     
     <nav class="page-nav">
@@ -1262,20 +1283,9 @@ Unity3d使用在Unity中新建项目。
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 27
+        Total : 26
         </div>
         <!-- search  -->
         
@@ -1285,20 +1295,6 @@ Unity3d使用在Unity中新建项目。
     
     
     
-    
-    <div class="archive-year"> 2021 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/09</span><a class="archive-post-title" href= "/2021/12/09/test-from-new-computer/" >test from new computer[title]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
@@ -1505,9 +1501,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="3D游戏"><span class="iconfont-archer">&#xe60a;</span>3D游戏</span>
     
-        <span class="sidebar-category-name" data-categories="AI"><span class="iconfont-archer">&#xe60a;</span>AI</span>
-    
         <span class="sidebar-category-name" data-categories="IT项目管理"><span class="iconfont-archer">&#xe60a;</span>IT项目管理</span>
+    
+        <span class="sidebar-category-name" data-categories="AI"><span class="iconfont-archer">&#xe60a;</span>AI</span>
     
         <span class="sidebar-category-name" data-categories="MOSAD"><span class="iconfont-archer">&#xe60a;</span>MOSAD</span>
     
@@ -1548,7 +1544,22 @@ jsonContent:
     </div>
     <!-- async load share.js -->
      
-    </body>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
 </html>
 
 

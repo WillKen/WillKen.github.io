@@ -369,46 +369,6 @@ height:50vh;
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2019/09/16/Objective-C-Notes/" >
-            
-                <span>Objective-C Notes</span>
-        </a>
-        <div class="abstract-content">
-            Objective C Notes声明：本博客参考了易百教程和菜鸟教程
-
-类的声明：@interface child : father
-
-方法的实现： @implementation child (不用制定父类)
-
-.h文件中声明public methods  .m文件中声明private methods
-
-@interface 类名后加个括号：Objective-C 2.0中的Category语法 ，Category提供了一种比继承（inheritance）更为简洁的方法来对class进行扩展，我们可以为任何已经存在的class添加方法。
-
-Defining Methods：
-12-(...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/16</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Objective-C">Objective-C</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
         <a class="abstract-title" href = "/2019/09/11/3D游戏-离散仿真引擎基础/" >
             
                 <span>3D游戏-离散仿真引擎基础</span>
@@ -1115,20 +1075,9 @@ Homework 11. Sign ...
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 27
+        Total : 26
         </div>
         <!-- search  -->
         
@@ -1138,20 +1087,6 @@ Homework 11. Sign ...
     
     
     
-    
-    <div class="archive-year"> 2021 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/09</span><a class="archive-post-title" href= "/2021/12/09/test-from-new-computer/" >test from new computer[title]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
@@ -1358,9 +1293,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="3D游戏"><span class="iconfont-archer">&#xe60a;</span>3D游戏</span>
     
-        <span class="sidebar-category-name" data-categories="AI"><span class="iconfont-archer">&#xe60a;</span>AI</span>
-    
         <span class="sidebar-category-name" data-categories="IT项目管理"><span class="iconfont-archer">&#xe60a;</span>IT项目管理</span>
+    
+        <span class="sidebar-category-name" data-categories="AI"><span class="iconfont-archer">&#xe60a;</span>AI</span>
     
         <span class="sidebar-category-name" data-categories="MOSAD"><span class="iconfont-archer">&#xe60a;</span>MOSAD</span>
     
@@ -1401,7 +1336,22 @@ jsonContent:
     </div>
     <!-- async load share.js -->
      
-    </body>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
 </html>
 
 
